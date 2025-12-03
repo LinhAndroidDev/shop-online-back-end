@@ -21,8 +21,8 @@ public class Shipment {
     @Column(name = "carrier")
     private String carrier;
 
-    @Column(name = "tracking_code")
-    private String trackingCode;
+    @Column(name = "tracking_phone")
+    private String trackingPhone;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

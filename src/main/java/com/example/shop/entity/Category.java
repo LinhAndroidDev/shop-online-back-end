@@ -2,6 +2,9 @@ package com.example.shop.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -16,4 +19,8 @@ public class Category {
 
     @Column(name = "parent_id")
     private Long parentId;
+
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 }
