@@ -3,6 +3,9 @@ package com.example.shop.entity;
 import com.example.shop.model.ProductStatus;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -18,7 +21,7 @@ public class Product {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "thumbnail")
@@ -30,4 +33,8 @@ public class Product {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
+
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 }

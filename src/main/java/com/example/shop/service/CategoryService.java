@@ -2,6 +2,7 @@ package com.example.shop.service;
 
 import com.example.shop.dto.CategoryRequest;
 import com.example.shop.entity.Category;
+import com.example.shop.mapper.CategoryMapper;
 import com.example.shop.repository.CategoryRepository;
 import com.example.shop.response.CategoryResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,15 +18,11 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private CategoryMapper categoryMapper;
+
     public List<CategoryResponse.CategoryData> getCategories() {
-        return categoryRepository.findAll().stream().map(category -> {
-            CategoryResponse.CategoryData data = new CategoryResponse.CategoryData();
-            data.setId(category.getId());
-            data.setName(category.getName());
-            data.setParentId(category.getParentId());
-            data.setCreatedAt(category.getCreatedAt().toString());
-            return data;
-        }).toList();
+        return categoryRepository.findAll().stream().map(category -> categoryMapper.toResponse(category)).toList();
     }
 
     public HttpStatus createCategory(CategoryRequest request) {
@@ -33,10 +30,7 @@ public class CategoryService {
         if (exists) {
             return HttpStatus.CONFLICT;
         }
-        Category category = new Category();
-        category.setName(request.getName());
-        category.setParentId(null);
-        categoryRepository.save(category);
+        categoryRepository.save(categoryMapper.toEntity(request));
         return HttpStatus.OK;
     }
 
