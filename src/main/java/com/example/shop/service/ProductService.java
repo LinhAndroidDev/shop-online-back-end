@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -60,13 +61,13 @@ public class ProductService {
     }
 
     public HttpStatus updateProduct(ProductRequest request) {
-        if (productRepository.existsByName(request.getName())) {
-            return HttpStatus.CONFLICT;
-        }
-
         var product = productRepository.findById(request.getId()).orElse(null);
         if (product == null) {
             return HttpStatus.NOT_FOUND;
+        }
+
+        if (!Objects.equals(product.getName(), request.getName()) && productRepository.existsByName(request.getName())) {
+            return HttpStatus.CONFLICT;
         }
 
         product.setName(request.getName());
