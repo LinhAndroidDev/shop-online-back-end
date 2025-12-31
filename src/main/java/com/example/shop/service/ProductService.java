@@ -58,6 +58,20 @@ public class ProductService {
         }).toList();
     }
 
+    public ProductResponse.ProductData getProductById(Long id) {
+        Product product = productRepository.findById(id).orElse(null);
+        if (product == null) {
+            return null;
+        }
+        Category category = categoryRepository.findById((long) product.getCategoryId()).orElse(null);
+        CategoryResponse.CategoryData categoryData = categoryMapper.toResponse(category);
+        List<ProductImage> productImageList = productImageRepository.findByProductId(product.getId());
+        List<String> images = productImageList.stream()
+                .map(ProductImage::getUrl)
+                .toList();
+        return productMapper.toResponse(product, categoryData, images);
+    }
+
     public HttpStatus createProduct(ProductRequest request) {
         if (request.getName().isEmpty()) {
             return HttpStatus.BAD_REQUEST;
@@ -96,7 +110,6 @@ public class ProductService {
             productImage.setUrl(e);
             productImageRepository.save(productImage);
         });
-        saveInventoryForProduct(savedProduct);
         return HttpStatus.OK;
     }
 
