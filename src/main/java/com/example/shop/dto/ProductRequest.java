@@ -2,6 +2,8 @@ package com.example.shop.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class ProductRequest {
     private Long id;
@@ -11,4 +13,5 @@ public class ProductRequest {
     private String thumbnail;
     private Float price;
     private String status;
+    private List<String> images;
 }

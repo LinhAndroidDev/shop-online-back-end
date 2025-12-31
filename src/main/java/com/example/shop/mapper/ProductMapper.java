@@ -7,6 +7,8 @@ import com.example.shop.response.ProductResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface ProductMapper extends BaseMapper {
     @Mapping(target = "createdAt", ignore = true)
@@ -16,6 +18,7 @@ public interface ProductMapper extends BaseMapper {
     @Mapping(source = "product.name", target = "name")
     @Mapping(source = "product.createdAt", target = "createdAt", qualifiedByName = "dateToString")
     @Mapping(source = "category", target = "category")
-    ProductResponse.ProductData toResponse(Product product, CategoryResponse.CategoryData category);
+    @Mapping(source = "images", target = "images")
+    ProductResponse.ProductData toResponse(Product product, CategoryResponse.CategoryData category, List<String> images);
 
 }

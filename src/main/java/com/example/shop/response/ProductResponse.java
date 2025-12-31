@@ -3,6 +3,8 @@ package com.example.shop.response;
 import com.example.shop.model.ProductStatus;
 import lombok.Data;
 
+import java.util.List;
+
 public class ProductResponse extends BaseResponse<ProductResponse.ProductData> {
 
     @Data
@@ -15,5 +17,6 @@ public class ProductResponse extends BaseResponse<ProductResponse.ProductData> {
         private Float price;
         private ProductStatus status;
         private String createdAt;
+        private List<String> images;
     }
 }
