@@ -1,0 +1,19 @@
+package com.example.shop.entity;
+
+import jakarta.persistence.*;
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name = "product_color")
+public class ProductColor {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "hex_code")
+    private String hexCode;
+}

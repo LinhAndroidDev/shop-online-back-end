@@ -46,6 +46,9 @@ public class ProductService {
     @Autowired
     private ProductImageService productImageService;
 
+    @Autowired
+    private ProductVariantService productVariantService;
+
     public List<ProductResponse.ProductData> getProducts() {
         return productRepository.findAll().stream().map(product -> {
             Category category = categoryRepository.findById((long) product.getCategoryId()).orElse(null);

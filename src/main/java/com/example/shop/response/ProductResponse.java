@@ -15,6 +15,7 @@ public class ProductResponse extends BaseResponse<ProductResponse.ProductData> {
         private String description;
         private String thumbnail;
         private Float price;
+        private Float discount;
         private ProductStatus status;
         private String createdAt;
         private List<String> images;

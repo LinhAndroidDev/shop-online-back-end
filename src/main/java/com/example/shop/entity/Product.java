@@ -30,6 +30,9 @@ public class Product {
     @Column(name = "price")
     private Float price;
 
+    @Column(name = "discount")
+    private Float discount;
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
