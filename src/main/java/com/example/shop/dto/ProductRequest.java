@@ -19,6 +19,7 @@ public class ProductRequest {
 
     @Data
     public static class ProductVariantRequest {
+        private Long id;
         private String origin;
         private List<String> size;
         private List<ProductColorRequest> color;

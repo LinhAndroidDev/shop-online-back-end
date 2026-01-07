@@ -57,7 +57,8 @@ public class ProductService {
             List<String> images = productImageList.stream()
                     .map(ProductImage::getUrl)
                     .toList();
-            return productMapper.toResponse(product, categoryData, images);
+            ProductResponse.ProductVariantData variantData = productVariantService.getVariantDataByProductId(product.getId());
+            return productMapper.toResponse(product, categoryData, images, variantData);
         }).toList();
     }
 
@@ -72,7 +73,8 @@ public class ProductService {
         List<String> images = productImageList.stream()
                 .map(ProductImage::getUrl)
                 .toList();
-        return productMapper.toResponse(product, categoryData, images);
+        ProductResponse.ProductVariantData variantData = productVariantService.getVariantDataByProductId(product.getId());
+        return productMapper.toResponse(product, categoryData, images, variantData);
     }
 
     public HttpStatus createProduct(ProductRequest request) {
@@ -92,6 +94,12 @@ public class ProductService {
             productImageRepository.save(productImage);
         });
         saveInventoryForProduct(savedProduct);
+        
+        // Xử lý ProductVariant nếu có
+        if (request.getVariant() != null) {
+            productVariantService.createProductVariant(savedProduct.getId(), request.getVariant());
+        }
+        
         return HttpStatus.OK;
     }
 
@@ -113,6 +121,12 @@ public class ProductService {
             productImage.setUrl(e);
             productImageRepository.save(productImage);
         });
+        
+        // Xử lý ProductVariant nếu có
+        if (request.getVariant() != null) {
+            productVariantService.updateProductVariant(savedProduct.getId(), request.getVariant());
+        }
+        
         return HttpStatus.OK;
     }
 
@@ -127,6 +141,9 @@ public class ProductService {
         if (product == null) {
             return HttpStatus.NOT_FOUND;
         }
+
+        // Xóa ProductVariant và tất cả sizes, colors liên quan
+        productVariantService.deleteProductVariantByProductId(product.getId());
 
         Inventory inventory = inventoryRepository.findByProductId(product.getId());
         if (inventory != null) {

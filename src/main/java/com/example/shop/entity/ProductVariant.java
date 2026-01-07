@@ -17,9 +17,9 @@ public class ProductVariant {
     @Column(name = "origin")
     private String origin;
 
-    @Column(name = "size_id")
-    private int sizeId;
+    @Column(name = "sizes")
+    private String sizes;
 
-    @Column(name = "color_id")
-    private int colorId;
+    @Column(name = "colors")
+    private String colors;
 }

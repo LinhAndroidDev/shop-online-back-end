@@ -11,6 +11,9 @@ public class ProductSize {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "id_product_variant")
+    private int productVariantId;
+
     @Column(name = "name")
     private String name;
 }

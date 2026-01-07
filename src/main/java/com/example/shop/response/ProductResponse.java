@@ -19,5 +19,20 @@ public class ProductResponse extends BaseResponse<ProductResponse.ProductData> {
         private ProductStatus status;
         private String createdAt;
         private List<String> images;
+        private ProductVariantData variant;
+    }
+
+    @Data
+    public static class ProductVariantData {
+        private Long id;
+        private String origin;
+        private List<String> size;
+        private List<ProductColorData> color;
+    }
+
+    @Data
+    public static class ProductColorData {
+        private String name;
+        private String hexCode;
     }
 }

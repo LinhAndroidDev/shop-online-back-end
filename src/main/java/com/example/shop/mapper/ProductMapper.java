@@ -19,6 +19,7 @@ public interface ProductMapper extends BaseMapper {
     @Mapping(source = "product.createdAt", target = "createdAt", qualifiedByName = "dateToString")
     @Mapping(source = "category", target = "category")
     @Mapping(source = "images", target = "images")
-    ProductResponse.ProductData toResponse(Product product, CategoryResponse.CategoryData category, List<String> images);
+    @Mapping(source = "variant", target = "variant")
+    ProductResponse.ProductData toResponse(Product product, CategoryResponse.CategoryData category, List<String> images, ProductResponse.ProductVariantData variant);
 
 }
