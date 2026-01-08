@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Báo cáo sản phẩm hết hàng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f6f9fc;
+            color: #1f2933;
+            margin: 0;
+            padding: 0;
+        }
+        .wrapper {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(120deg, #1e88e5, #42a5f5);
+            color: #ffffff;
+            padding: 20px 24px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .header p {
+            margin: 6px 0 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 20px 24px 8px;
+        }
+        .content p {
+            margin: 0 0 12px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        .table-wrapper {
+            margin-top: 12px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        th {
+            background: #f1f5f9;
+            font-weight: 600;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #b42318;
+            background: #fee4e2;
+        }
+        .footer {
+            padding: 16px 24px 20px;
+            background: #f8fafc;
+            font-size: 13px;
+            color: #475467;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 16px;
+            margin-top: 12px;
+            background: #1e88e5;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .empty {
+            padding: 12px;
+            background: #f1f5f9;
+            border: 1px dashed #cbd5e1;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #475467;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div class="card">
+        <div class="header">
+            <h1>Báo cáo sản phẩm hết hàng</h1>
+            <p th:text="${reportDate}">dd/MM/yyyy HH:mm</p>
+        </div>
+
+        <div class="content">
+            <p>Chào anh/chị,</p>
+            <p>Các sản phẩm dưới đây đã hết hàng trong kho. Vui lòng kiểm tra và nhập thêm hàng sớm nhất.</p>
+
+            <div class="table-wrapper" th:if="${#lists.isEmpty(items) == false}">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Cập nhật lần cuối</th>
+                        <th>Ghi chú</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${items}">
+                        <td th:text="${item.id}">1</td>
+                        <td th:text="${item.name}">Tên sản phẩm</td>
+                        <td>
+                            <span class="badge" th:text="${item.quantity}">0</span>
+                        </td>
+                        <td th:text="${item.updatedAt}">dd/MM/yyyy HH:mm</td>
+                        <td th:text="${item.note}">Đã hết hàng</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="empty" th:if="${#lists.isEmpty(items)}">
+                Hiện không có sản phẩm nào hết hàng.
+            </div>
+
+            <a class="button" th:href="${dashboardUrl}" target="_blank">Xem chi tiết trong dashboard</a>
+        </div>
+
+        <div class="footer">
+            <p>Đây là email tự động, vui lòng không trả lời trực tiếp.</p>
+            <p>Nếu có thắc mắc, liên hệ đội vận hành để được hỗ trợ.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
